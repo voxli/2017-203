@@ -6,12 +6,14 @@
 void kidyaevvs::lab1()
 {
 	double new_var;
+
 	for (int k = 0; k < N; k++)
 	{
 		for(int i = k + 1; i < N; i++)
 		{
 			new_var = A[i][k] / A[k][k];
 			b[i] -= b[k] * new_var;
+
 			for(int j = 0; j < N; j++)
 			{
 				A[i][j] -= A[k][j] * new_var;
@@ -22,6 +24,7 @@ void kidyaevvs::lab1()
 	for(int i = N - 1; i >= 0; i--)
 	{
 		x[i] = b[i] / A[i][i];
+
 		for(int j = i + 1; j < N; j++)
 		{
 			x[i] += -A[i][j] * x[j] / A[i][i];
@@ -36,38 +39,38 @@ void kidyaevvs::lab1()
  */
 void kidyaevvs::lab2()
 {
-	for (int k = 0; k < N; k++) 
+	for (int k = 0; k < N; k++)
 	{
 		int id_str_of_max_el = -1;
         double max_el = 0;
 
-        for (int p = 0; p < N; p++) 
+        for (int p = 0; p < N; p++)
 		{
-            if (abs(A[k][p]) >= max_el) 
+            if (abs(A[k][p]) >= max_el)
 			{
                 max_el = abs(A[k][p]);
                 id_str_of_max_el = p;
             }
         }
 
-        if (id_str_of_max_el != -1) 
+        if (id_str_of_max_el != -1)
 		{
-            for (int j = 0; j < N; j++) 
+            for (int j = 0; j < N; j++)
 			{
-                swap(A[j][id_str_of_max_el], A[j][k]);
+               std :: swap(A[j][id_str_of_max_el], A[j][k]);
             }
-			
-            swap(b[id_str_of_max_el], b[k]);
+
+            std :: swap(b[id_str_of_max_el], b[k]);
 
             for (int i = k + 1; i < N; i++)
             {
-                double сoef = A[i][k] / (A[k][k] * 1.0);
-				
-                for (int j = k; j < N; ++j)
+                double coef = A[i][k] / (A[k][k] * 1.0);
+
+                for (int j = k; j < N; j++)
                 {
-					A[i][j] -= сoef * A[k][j];
+					A[i][j] -= coef * A[k][j];
 				}
-                b[i] -= сoef * b[k];
+                b[i] -= coef * b[k];
             }
 
         }
@@ -76,11 +79,11 @@ void kidyaevvs::lab2()
 
 
     x[N - 1] = b[N - 1];
-	
-    for (int i = N - 2; i >= 0; i--) 
+
+    for (int i = N - 2; i >= 0; i--)
 	{
         x[i] = b[i];
-		
+
         for (int j = i + 1; j < N; j++)
         {
 			x[i] -= x[j] * A[i][j];
