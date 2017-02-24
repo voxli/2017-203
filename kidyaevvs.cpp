@@ -90,7 +90,6 @@ void kidyaevvs::lab2()
 		}
         x[i] /= A[i][i];
     }
-
 }
 
 
