@@ -100,6 +100,73 @@ void kidyaevvs::lab2()
 void kidyaevvs::lab3()
 {
 
+    double temp1, temp2;
+
+    for (int i = 0; i < N; i++)
+    {
+        temp1 = 0;
+        temp2 = 1;
+
+        for (int k = 0; k < i; k++)
+        {
+            temp1 += pow(A[k][i], 2);
+        }
+
+        A[i][i] = sqrt(A[i][i] - double(temp1));
+
+        if(i == 0)
+        {
+            temp2 = 0;
+        }
+        else
+        {
+            for(int l = i; l < N; l++)
+            {
+                temp2 = temp2 * A[i - 1][l];
+            }
+        }
+
+        for (int j = 0; j < N; j++)
+        {
+            if (j < i)
+            {
+                A[i][j] = 0;
+            }
+            else if (i == j)
+            {
+                continue;
+            }
+            else
+            {
+                A[i][j] = (A[i][j] - temp2) / A[i][i];
+            }
+        }
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        temp1 = 0;
+
+        for (int k = 0; k < i; k++)
+        {
+            temp1 = temp1 + A[k][i] * b[k];
+        }
+
+        b[i] = (b[i] - temp1) / A[i][i];
+    }
+
+    for (int k = N - 1; k >= 0; k--)
+    {
+        double resault = 0;
+
+        for (int i = k + 1; i < N; i++)
+        {
+            resault += A[k][i] * x[i];
+        }
+
+        x[k] = (b[k] - resault) / A[k][k];
+    }
+
 }
 
 
@@ -109,6 +176,26 @@ void kidyaevvs::lab3()
  */
 void kidyaevvs::lab4()
 {
+
+    double* new_A = new double[N];
+    double* new_b = new double[N];
+
+    new_A[0] = A[0][1] / (-A[0][0]);
+    new_b[0] = b[0] / A[0][0];
+
+    for(int i = 1; i < N; i++)
+    {
+        new_A[i] = A[i][i+1] / (-A[i][i-1] * new_A[i-1] - A[i][i]);
+        B[i] = (-b[i] + A[i][i-1] * new_b[i-1]) / ( -A[i][i-1] * new_A[i-1] - A[i][i]);
+    }
+
+    for(int i = N - 1; i >= 0; i--)
+    {
+        x[i] = new_A[i]*x[i+1]+new_b[i];
+    }
+
+    delete[] new_A;
+    delete[] new_b;
 
 }
 
