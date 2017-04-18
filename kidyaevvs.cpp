@@ -205,7 +205,45 @@ void kidyaevvs::lab4()
  */
 void kidyaevvs::lab5()
 {
+    double Eps = 0.0001;
+    double* temp_x = new double[N];
+    double norm;
 
+    for (int i = 0; i < N; i++)
+    {
+        x[i]=0;
+    }
+
+    do {
+        for (int i = 0; i < N; i++)
+        {
+            temp_x[i] = b[i];
+
+            for (int j = 0; j < N; j++)
+            {
+                if (i != j)
+                {
+                    temp_x[i] -= A[i][j] * x[j];
+                }
+            }
+
+            temp_x[i] /= A[i][i];
+        }
+
+        norm = fabs(x[0] - temp_x[0]);
+
+        for (int i = 0; i < N; i++)
+        {
+            if (fabs(x[i] - temp_x[i]) > norm)
+            {
+                norm = fabs(x[i] - temp_x[i]);
+            }
+
+            x[i] = temp_x[i];
+        }
+    } while (norm > Eps);
+
+    delete[] temp_x;
 }
 
 
@@ -215,7 +253,48 @@ void kidyaevvs::lab5()
  */
 void kidyaevvs::lab6()
 {
+    double eps = 0.0001;
+    double* y = new double[N];
+    double norm = 0;
+    double temp = 0;
 
+    for (int i = 0; i < N; i++)
+    {
+        x[i] = 0;
+    }
+
+    do
+    {
+        for (int i = 0; i < N; i++)
+        {
+            y[i] = x[i];
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            temp = 0;
+            norm = 0;
+
+            for (int j = 0; j < i; j++)
+            {
+                temp += (A[i][j] * x[j]);
+            }
+
+            for (int j = i + 1; j < N; j++)
+            {
+                temp += (A[i][j] * x[j]);
+            }
+
+            x[i] = (b[i] - temp) / A[i][i];
+
+            for (int i = 0; i < N; i++)
+            {
+                norm += (x[i] - y[i])*(x[i] - y[i]);
+            }
+        }
+    } while (sqrt(norm) >= eps);
+
+    delete[] y;
 }
 
 
