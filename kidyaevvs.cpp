@@ -186,19 +186,18 @@ void kidyaevvs::lab4()
     for(int i = 1; i < N; i++)
     {
         new_A[i] = A[i][i+1] / (-A[i][i-1] * new_A[i-1] - A[i][i]);
-        B[i] = (-b[i] + A[i][i-1] * new_b[i-1]) / ( -A[i][i-1] * new_A[i-1] - A[i][i]);
+        new_b[i] = (-b[i] + A[i][i-1] * new_b[i-1]) / ( -A[i][i-1] * new_A[i-1] - A[i][i]);
     }
 
     for(int i = N - 1; i >= 0; i--)
     {
-        x[i] = new_A[i]*x[i+1]+new_b[i];
+        x[i] = new_A[i] * x[i+1] + new_b[i];
     }
 
     delete[] new_A;
     delete[] new_b;
 
 }
-
 
 
 /**
@@ -229,3 +228,10 @@ void kidyaevvs::lab7()
 
 }
 
+/**
+ * Один из градиентных методов
+ */
+void kidyaevvs::lab8()
+{
+
+}
